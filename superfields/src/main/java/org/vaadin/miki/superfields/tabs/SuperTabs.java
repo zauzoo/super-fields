@@ -224,11 +224,14 @@ public class SuperTabs<T>
      * @param values Values to add tabs and contents for.
      */
     public void addTabs(Collection<T> values) {
-        values.forEach(value ->
-            this.getValueAndTab(value).ifPresentOrElse(
-                    e -> this.tabs.setSelectedTab(e.getValue()),
-                    () -> this.addNewTab(value, this.values.isEmpty())
-            ));
+        values.forEach(value -> {
+            Optional<Map.Entry<T, Tab>> valueAndTab = this.getValueAndTab(value);
+            if (valueAndTab.isPresent()) {
+                this.tabs.setSelectedTab(valueAndTab.get().getValue());
+            } else {
+                this.addNewTab(value, this.values.isEmpty());
+            }
+        });
     }
 
     /**
@@ -240,10 +243,12 @@ public class SuperTabs<T>
      * @param tabContents Contents.
      */
     public void addTab(T value, Tab tabHeader, Component tabContents) {
-        this.getValueAndTab(value).ifPresentOrElse(
-                e -> this.tabs.setSelectedTab(e.getValue()),
-                () -> this.addNewTab(value, tabHeader, tabContents, this.values.isEmpty())
-        );
+        Optional<Map.Entry<T, Tab>> valueAndTab = this.getValueAndTab(value);
+        if (valueAndTab.isPresent()) {
+            this.tabs.setSelectedTab(valueAndTab.get().getValue());
+        } else {
+            this.addNewTab(value, tabHeader, tabContents, this.values.isEmpty());
+        }
     }
 
     /**
@@ -306,14 +311,15 @@ public class SuperTabs<T>
 
     @Override
     protected void setPresentationValue(T t) {
-        this.values.stream().filter(e -> Objects.equals(t, e.getKey())).findFirst().ifPresentOrElse(
-                e -> this.tabs.setSelectedTab(e.getValue()),
-                () -> {
-                    if(this.isCustomValueAllowed())
-                        addNewTab(t, true);
-                    else this.updateValue();
-                }
-        );
+        Optional<Map.Entry<T, Tab>> first = this.values.stream().filter(e -> Objects.equals(t, e.getKey())).findFirst();
+        if (first.isPresent()) {
+            this.tabs.setSelectedTab(first.get().getValue());
+        } else {
+            if(this.isCustomValueAllowed())
+                addNewTab(t, true);
+            else this.updateValue();
+
+        }
     }
 
     /**

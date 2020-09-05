@@ -37,10 +37,15 @@ public final class ReflectTools {
             if(field != null && valueType.isAssignableFrom(field.getType()))
                 typeToCheck = null;
         }
-        if(field != null && field.trySetAccessible()) {
+        if(field != null) {
             try {
-                return Optional.ofNullable(valueType.cast(field.get(instance)));
-            } catch (IllegalAccessException | ClassCastException e) {
+                field.setAccessible(true);
+                try {
+                    return Optional.ofNullable(valueType.cast(field.get(instance)));
+                } catch (IllegalAccessException | ClassCastException e) {
+                    // ignored
+                }
+            } catch (SecurityException se) {
                 // ignored
             }
         }

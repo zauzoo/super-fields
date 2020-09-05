@@ -63,12 +63,12 @@ public class SuperTextField extends TextField implements CanSelectText, TextSele
 
     @Override
     protected void onAttach(AttachEvent attachEvent) {
-        this.delegate.onAttach(attachEvent, super::onAttach);
+        this.delegate.onAttach(attachEvent, a -> SuperTextField.super.onAttach(a));
     }
 
     @Override
     protected void onDetach(DetachEvent detachEvent) {
-        this.delegate.onDetach(detachEvent, super::onDetach);
+        this.delegate.onDetach(detachEvent, a -> SuperTextField.super.onDetach(a));
     }
 
     @Override

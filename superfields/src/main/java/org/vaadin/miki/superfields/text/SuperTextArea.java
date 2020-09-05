@@ -18,6 +18,8 @@ import org.vaadin.miki.markers.WithReceivingSelectionEventsFromClientMixin;
 import org.vaadin.miki.markers.WithValueMixin;
 import org.vaadin.miki.shared.text.TextSelectionDelegate;
 
+import java.util.function.Consumer;
+
 /**
  * An extension of {@link TextArea} with some useful features.
  * @author miki
@@ -62,12 +64,12 @@ public class SuperTextArea extends TextArea implements CanSelectText, TextSelect
 
     @Override
     protected void onAttach(AttachEvent attachEvent) {
-        this.delegate.onAttach(attachEvent, super::onAttach);
+        this.delegate.onAttach(attachEvent, a -> SuperTextArea.super.onAttach(a));
     }
 
     @Override
     protected void onDetach(DetachEvent detachEvent) {
-        this.delegate.onDetach(detachEvent, super::onDetach);
+        this.delegate.onDetach(detachEvent, a -> SuperTextArea.super.onDetach(a));
     }
 
     @Override

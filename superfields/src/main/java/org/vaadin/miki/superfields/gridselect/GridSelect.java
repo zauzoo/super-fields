@@ -26,13 +26,10 @@ public class GridSelect<V> extends CustomField<V>
     /**
      * Creates the component.
      * This requires a subsequent configuration of grid's columns.
-     * @param items Items to add to the grid.
      * @see #getGrid()
      */
-    @SafeVarargs
-    public GridSelect(V... items) {
-        this(new RestrictedModeGrid<>());
-        this.setItems(items);
+    public GridSelect() {
+        this(new Grid<>());
     }
 
     /**
@@ -43,7 +40,7 @@ public class GridSelect<V> extends CustomField<V>
      */
     @SafeVarargs
     public GridSelect(Class<V> type, boolean createColumns, V... items) {
-        this(new RestrictedModeGrid<>(type, createColumns));
+        this(new Grid<>(type, createColumns));
         this.setItems(items);
     }
 
@@ -85,7 +82,10 @@ public class GridSelect<V> extends CustomField<V>
 
     /**
      * Returns the underlying {@link Grid}. Use with caution. Please do not mess with grid's selection.
+<<<<<<< HEAD
      * Note: unless a protected constructor with predefined grid - {@link GridSelect(Grid)} - is called, the returned grid will be a {@link RestrictedModeGrid}.
+=======
+>>>>>>> d31c51ba4ebdba3b6baac0e01ccd76838e9e3157
      * @return The {@link Grid}. Any changes to the grid will affect this component.
      */
     public Grid<V> getGrid() {

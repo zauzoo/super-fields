@@ -21,6 +21,7 @@ import org.vaadin.miki.markers.WithReceivingSelectionEventsFromClientMixin;
 import org.vaadin.miki.markers.WithValueMixin;
 import org.vaadin.miki.shared.dates.DatePattern;
 import org.vaadin.miki.shared.text.TextSelectionDelegate;
+import org.vaadin.miki.superfields.text.SuperTextField;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -122,12 +123,12 @@ public class SuperDatePicker extends DatePicker
 
     @Override
     protected void onAttach(AttachEvent attachEvent) {
-        this.textSelectionDelegate.onAttach(attachEvent, super::onAttach);
+        this.textSelectionDelegate.onAttach(attachEvent, a -> SuperDatePicker.super.onAttach(a));
     }
 
     @Override
     protected void onDetach(DetachEvent detachEvent) {
-        this.textSelectionDelegate.onDetach(detachEvent, super::onDetach);
+        this.textSelectionDelegate.onDetach(detachEvent, a -> SuperDatePicker.super.onDetach(a));
     }
 
     @ClientCallable
